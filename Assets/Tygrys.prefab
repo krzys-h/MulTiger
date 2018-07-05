@@ -2751,7 +2751,6 @@ GameObject:
   - component: {fileID: 82632050517962116}
   - component: {fileID: 136673435822485128}
   - component: {fileID: 114935260387962084}
-  - component: {fileID: 114696520502853270}
   - component: {fileID: 114427728817299236}
   - component: {fileID: 114023422874878936}
   m_Layer: 0
@@ -10997,7 +10996,7 @@ MonoBehaviour:
     i14: 88
     i15: 49
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114589550908675136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11011,25 +11010,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: -1
   origin: {fileID: 0}
---- !u!114 &114696520502853270
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1515317947060150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5cb22d331ef7d64796f917c6a455a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  circuit: {fileID: 0}
-  lookAheadForTargetOffset: 10
-  lookAheadForTargetFactor: 0.1
-  lookAheadForSpeedOffset: 20
-  lookAheadForSpeedFactor: 0.2
-  progressStyle: 0
-  pointToPointThreshold: 4
-  target: {fileID: 0}
 --- !u!114 &114851100917601760
 MonoBehaviour:
   m_ObjectHideFlags: 1
