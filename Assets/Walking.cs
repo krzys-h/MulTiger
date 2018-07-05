@@ -7,12 +7,15 @@ using UnityEngine.Networking;
 public class Walking : NetworkBehaviour {
     public AudioClip oof;
     public Transform target;
+    [SyncVar]
+    public string nick = "";
 
 	// Use this for initialization
 	void Start () {
         if (!isLocalPlayer)
         {
             GetComponentInChildren<Camera>().enabled = false;
+            GetComponentInChildren<AudioListener>().enabled = false;
         }
 	}
 	
@@ -47,6 +50,7 @@ public class Walking : NetworkBehaviour {
             if (Input.GetKeyDown(KeyCode.Space))
                 CmdSendChat("test");
         }
+        GetComponentInChildren<TextMesh>().text = nick;
 
         /*RaycastHit hit;
         if(Physics.Raycast(transform.position, Vector3.down, out hit))
@@ -55,7 +59,7 @@ public class Walking : NetworkBehaviour {
             transform.up = Vector3.MoveTowards(transform.up, hit.normal, Time.deltaTime);
         }*/
 
-        GetComponent<AudioSource>().pitch = Mathf.Clamp(GetComponent<Rigidbody>().velocity.magnitude / 15.0f, 0.6f, 1.0f);
+        //GetComponent<AudioSource>().pitch = Mathf.Clamp(GetComponent<Rigidbody>().velocity.magnitude / 15.0f, 0.6f, 1.0f);
 
         //GetComponent<NavMeshAgent>().SetDestination(target.position);
         /*GetComponent<Rigidbody>().AddForce((target.position - transform.position).normalized * Time.deltaTime * 1000.0f, ForceMode.Impulse);
@@ -71,5 +75,25 @@ public class Walking : NetworkBehaviour {
     public void CmdSendChat(string message)
     {
         Chat.instance.RpcDisplayChat(message);
+    }
+
+    private string editName;
+
+    void OnGUI()
+    {
+        if (isLocalPlayer && nick == "")
+        {
+            editName = GUILayout.TextField(editName);
+            if (GUILayout.Button("Set name"))
+            {
+                CmdSetNick(editName);
+            }
+        }
+    }
+
+    [Command]
+    void CmdSetNick(string newName)
+    {
+        nick = newName;
     }
 }

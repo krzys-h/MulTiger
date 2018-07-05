@@ -33,5 +33,7 @@ Thumbs.db
 
 
 
-Output
+Output*
 .vs/
+*.zip
+*.tar.gz

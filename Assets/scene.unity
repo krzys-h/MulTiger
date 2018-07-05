@@ -861,14 +861,6 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 1259397160}
-    - target: {fileID: 0}
-      propertyPath: circuit
-      value: 
-      objectReference: {fileID: 1525729786}
-    - target: {fileID: 0}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1259397160}
     - target: {fileID: 1515317947060150, guid: 608f6af8361daf9448ed7fcb40775831, type: 2}
       propertyPath: m_IsActive
       value: 0
