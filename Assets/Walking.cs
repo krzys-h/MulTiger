@@ -55,8 +55,8 @@ public class Walking : MonoBehaviour {
         GetComponent<AudioSource>().pitch = Mathf.Clamp(GetComponent<Rigidbody>().velocity.magnitude / 15.0f, 0.6f, turbo > 1.0f ? 99.0f : 1.0f);
 
         //GetComponent<NavMeshAgent>().SetDestination(target.position);
-        GetComponent<Rigidbody>().AddForce((target.position - transform.position).normalized * Time.deltaTime * 1000.0f, ForceMode.Impulse);
-        transform.LookAt(target);
+        /*GetComponent<Rigidbody>().AddForce((target.position - transform.position).normalized * Time.deltaTime * 1000.0f, ForceMode.Impulse);
+        transform.LookAt(target);*/
     }
 
     void OnCollisionEnter(Collision collision)
