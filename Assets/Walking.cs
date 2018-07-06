@@ -14,6 +14,7 @@ public class Walking : NetworkBehaviour {
     [SyncVar]
     public float hp = 666;
     public AudioClip[] songs;
+    public float shiftUse = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -49,8 +50,24 @@ public class Walking : NetworkBehaviour {
             roll += 1.0f;
         if (Input.GetKey(KeyCode.E))
             roll -= 1.0f;
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && shiftUse < 3.0f)
+        {
             forward *= 3.0f;
+            shiftUse += Time.deltaTime;
+            Debug.Log(shiftUse);
+        }
+        else
+        {
+            if (shiftUse > 0.0f)
+                shiftUse -= Time.deltaTime;
+        }
+        if (hp < 0)
+        {
+            GetComponent<Animator>().SetBool("IsDead", true);
+            forward = 0.0f;
+            turn = 0.0f;
+            roll = 0.0f;
+        }
         if (isLocalPlayer)
         {
             //Debug.Log(forward + " " + turn + " " + roll);
@@ -84,6 +101,10 @@ public class Walking : NetworkBehaviour {
             if (collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude > this.GetComponent<Rigidbody>().velocity.magnitude)
                 hp -= Mathf.Pow(Mathf.Abs(collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude - this.GetComponent<Rigidbody>().velocity.magnitude), 0.6f) * 25.0f;
         }
+        if(collision.gameObject.name == "EasterEgg")
+        {
+            CmdEasterEgg();
+        }
     }
 
     [Command]
@@ -92,7 +113,7 @@ public class Walking : NetworkBehaviour {
         Chat.instance.RpcDisplayChat(message);
     }
 
-    private string editName;
+    private string editName = "";
 
     void OnGUI()
     {
@@ -101,6 +122,7 @@ public class Walking : NetworkBehaviour {
             if (nick == "")
             {
                 editName = GUILayout.TextField(editName);
+                editName = editName.Substring(0, editName.Length < 25 ? editName.Length : 25);
                 if (GUILayout.Button("Set name"))
                 {
                     CmdSetNick(editName);
@@ -115,6 +137,7 @@ public class Walking : NetworkBehaviour {
                     CmdSetSong(i);
                 }
             }
+            GUILayout.Label("HP: " + hp.ToString("N2"));
             GUILayout.EndHorizontal();
         }
     }
@@ -136,5 +159,12 @@ public class Walking : NetworkBehaviour {
         song = newSong;
         GetComponent<AudioSource>().clip = songs[newSong];
         GetComponent<AudioSource>().Play();
+    }
+
+    [Command]
+    void CmdEasterEgg()
+    {
+        GameObject.Find("EasterEgg").GetComponent<EasterEgg>().RpcEasterEgg();
+        Chat.instance.RpcDisplayChat("flag{argh_th4_E4rr4pE}");
     }
 }
